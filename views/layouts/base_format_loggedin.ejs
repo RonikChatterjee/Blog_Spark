@@ -1,0 +1,74 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogSpark</title>
+    <!-- BlogSpark Main Stylesheet -->
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- BlogSpark Rendered Styles -->
+    <%- style %>
+        <!-- BlogSpark Header Component -->
+        <link rel="stylesheet" href="/css/components/header.css">
+        <script defer src="/js/header.js"></script>
+        <!-- <link rel="stylesheet" href="/css/components/user_profile.css"> -->
+        <!-- BlogSpark Sidebar Component -->
+        <link rel="stylesheet" href="/css/components/sidebar.css">
+        <script defer src="/js/sidebar.js"></script>
+        <!-- BlogSpark Success Component -->
+        <link rel="stylesheet" href="/css/components/success.css">
+        <script defer src="/js/success.js"></script>
+        <!-- BlogSpark Error Component -->
+        <link rel="stylesheet" href="/css/components/error.css">
+        <script defer src="/js/error.js"></script>
+        <%- script %>
+</head>
+
+<body>
+    <div class="galaxy-container">
+        <!-- Background layers -->
+        <div class="stars-layer"></div>
+        <div class="nebula-layer"></div>
+        <div class="milky-way"></div>
+
+        <!-- Animated stars -->
+        <div class="star star-1"></div>
+        <div class="star star-2"></div>
+        <div class="star star-3"></div>
+        <div class="star star-4"></div>
+        <div class="star star-5"></div>
+        <div class="star star-6"></div>
+        <div class="star star-7"></div>
+        <div class="star star-8"></div>
+        <div class="star star-9"></div>
+        <div class="star star-10"></div>
+
+        <!-- Additional depth stars -->
+        <div class="star star-11"></div>
+        <div class="star star-12"></div>
+        <div class="star star-13"></div>
+        <div class="star star-14"></div>
+        <div class="star star-15"></div>
+
+        <!-- Shooting stars -->
+        <div class="shooting-star shooting-star-1"></div>
+        <div class="shooting-star shooting-star-2"></div>
+        <div class="shooting-star shooting-star-3"></div>
+
+        <!-- Content area (optional) -->
+        <!-- <div class="content">
+            <h1>Galaxy Night Sky</h1>
+            <p>A beautiful cosmic background</p>
+        </div> -->
+    </div>
+    <div class="cover-container">
+        <%- include('../partials/header_loggedin.ejs') %>
+            <%- include('../partials/sidebar.ejs') %>
+                <%- body %>
+                    <%- include('../partials/success.ejs') %>
+                        <%- include('../partials/error.ejs') %>
+    </div>
+</body>
+
+</html>

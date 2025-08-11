@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogSpark - Ignite Your Writing Journey</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Colors */
+            --color-primary: #343a40;
+            --color-secondary: #495057;
+            --color-accent: #d4af37;
+            --color-white: #ffffff;
+            --color-text-light: #f8f9fa;
+            --color-text-muted: #adb5bd;
+            --color-text-dark: #212529;
+
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 2.5rem;
+            --spacing-3xl: 3rem;
+            --spacing-4xl: 4rem;
+
+            /* Typography */
+            --font-size-sm: 0.875rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-full: 9999px;
+
+            /* Transitions */
+            --transition-fast: 0.15s ease-in-out;
+            --transition-normal: 0.3s ease-in-out;
+            --transition-slow: 0.5s ease-in-out;
+
+            /* Z-Index */
+            --z-header: 1000;
+            --z-slider: 1300;
+            --z-slider-navigation: 1400;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+            color: var(--color-text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        /* Glassomorphic Effect */
+        .glassomorphic {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    rgba(255, 255, 255, 0.05) 25%,
+                    rgba(52, 58, 64, 0.15) 50%,
+                    rgba(73, 80, 87, 0.1) 75%,
+                    rgba(255, 255, 255, 0.08) 100%);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: var(--radius-lg);
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-header);
+            padding: var(--spacing-md) 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) var(--spacing-xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            text-decoration: none;
+            color: var(--color-text-light);
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+        }
+
+        .header-menu {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .header-item {
+            padding: var(--spacing-sm) var(--spacing-md);
+            text-decoration: none;
+            color: var(--color-text-light);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .header-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .header-cta {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--color-accent);
+        }
+
+        .header-cta-primary {
+            background: var(--color-accent);
+            color: var(--color-text-dark);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .header-cta-primary:hover {
+            background: #ffd700;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Slider Styles (Your Current Implementation) */
+        .slider {
+            position: relative;
+            top: 120px;
+            width: 100%;
+            height: 50vh;
+            overflow: hidden;
+            transition: all var(--transition-slow);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-4xl);
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 45%;
+            border: none;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.6);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            z-index: var(--z-slider-navigation);
+            transition: all var(--transition-normal);
+        }
+
+        .slider-nav[data-slider-button='prev'] {
+            left: 15px;
+        }
+
+        .slider-nav[data-slider-button='next'] {
+            right: 15px;
+        }
+
+        .slider-nav:hover {
+            transform: scale(1.1);
+            color: var(--color-white);
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .slider-indicators {
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: var(--spacing-sm);
+            z-index: var(--z-slider-navigation);
+        }
+
+        .slider-indicators span {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all var(--transition-slow);
+        }
+
+        .slider-indicators span[data-slider-indicator-active] {
+            transform: scale(1.3);
+            background: var(--color-accent);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .slider-indicators span:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .slider-item {
+            visibility: hidden;
+            opacity: 0;
+            transition: all var(--transition-slow);
+        }
+
+        .slider-item[data-slider-item-active] {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            visibility: visible;
+            opacity: 1;
+            border-radius: var(--radius-lg);
+        }
+
+        .slider-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Hero Content Overlay */
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: var(--z-slider);
+            max-width: 600px;
+            padding: var(--spacing-xl);
+        }
+
+        .hero-title {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            color: var(--color-white);
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-xl);
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--color-accent), #ffd700);
+            color: var(--color-text-dark);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            font-weight: var(--font-weight-semibold);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            font-size: var(--font-size-lg);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: var(--spacing-4xl) 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-3xl);
+            color: var(--color-text-light);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: var(--font-size-lg);
+            color: var(--color-text-muted);
+            margin-bottom: var(--spacing-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: linear-gradient(135deg, rgba(52, 58, 64, 0.1), rgba(73, 80, 87, 0.05));
+            margin-top: 200px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: var(--spacing-xl);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-slow);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--spacing-lg);
+            color: var(--color-accent);
+        }
+
+        .feature-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-light);
+        }
+
+        .feature-description {
+            color: var(--color-text-muted);
+            line-height: 1.7;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 215, 0, 0.05));
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: var(--spacing-xl);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all var(--transition-fast);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .stat-number {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-light);
+            margin-top: var(--spacing-sm);
+        }
+
+        /* Featured Blogs Section */
+        .featured-blogs {
+            background: rgba(52, 58, 64, 0.05);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all var(--transition-slow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-card-content {
+            padding: var(--spacing-lg);
+        }
+
+        .blog-card-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-text-light);
+        }
+
+        .blog-card-excerpt {
+            color: var(--color-text-muted);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+        }
+
+        .section-cta {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--color-accent);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border: 1px solid var(--color-accent);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: var(--font-weight-semibold);
+            transition: all var(--transition-fast);
+        }
+
+        .cta-button:hover {
+            background: var(--color-accent);
+            color: var(--color-text-dark);
+        }
+
+        /* Reviews Section Styles */
+        .reviews-section {
+            background: linear-gradient(135deg, rgba(73, 80, 87, 0.1), rgba(52, 58, 64, 0.05));
+            padding: var(--spacing-4xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reviews-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Overall Rating Display */
+        .overall-rating {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--spacing-4xl);
+        }
+
+        .rating-summary {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            display: flex;
+            gap: var(--spacing-xl);
+            align-items: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .rating-score {
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .score-number {
+            font-size: 3.5rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-accent);
+            display: block;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .rating-text {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-sm);
+            margin-top: var(--spacing-sm);
+            display: block;
+        }
+
+        .stars-display {
+            margin: var(--spacing-sm) 0;
+        }
+
+        .stars-container {
+            position: relative;
+            display: inline-block;
+            font-size: 1.5rem;
+        }
+
+        .stars-background {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .stars-filled {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: var(--color-accent);
+            overflow: hidden;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .rating-breakdown {
+            flex: 1;
+        }
+
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .rating-label {
+            color: var(--color-text-light);
+            font-size: var(--font-size-sm);
+            min-width: 60px;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-accent), #ffd700);
+            border-radius: var(--radius-full);
+            transition: width var(--transition-slow);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .rating-count {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-sm);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /*----------- Featured Reviews Section ---------------*/
+        .featured-reviews {
+            margin-bottom: var(--spacing-4xl);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: var(--spacing-xl);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            transition: all var(--transition-slow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent), #ffd700);
+            transform: scaleX(0);
+            transition: transform var(--transition-slow);
+        }
+
+        .review-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .review-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .reviewer-info {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .reviewer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .reviewer-name {
+            color: var(--color-text-light);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .reviewer-title {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .review-date {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-xs);
+        }
+
+        .review-rating .stars-container {
+            font-size: 1.2rem;
+        }
+
+        .review-title {
+            color: var(--color-text-light);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .review-text {
+            color: var(--color-text-muted);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .review-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .review-tag {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--color-accent);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: var(--spacing-md);
+        }
+
+        .helpful-btn {
+            background: none;
+            border: none;
+            color: var(--color-text-muted);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            cursor: pointer;
+            transition: color var(--transition-fast);
+            font-size: var(--font-size-sm);
+        }
+
+        .helpful-btn:hover {
+            color: var(--color-accent);
+        }
+
+        .review-verified {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--color-accent);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Call to Action */
+        .reviews-cta {
+            text-align: center;
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button-primary {
+            background: linear-gradient(135deg, var(--color-accent), #ffd700);
+            color: var(--color-text-dark);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: var(--font-weight-semibold);
+            transition: all var(--transition-fast);
+            font-size: var(--font-size-lg);
+        }
+
+        .cta-button-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .cta-button-secondary {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--color-accent);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border: 1px solid var(--color-accent);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: var(--font-weight-semibold);
+            transition: all var(--transition-fast);
+            font-size: var(--font-size-lg);
+        }
+
+        .cta-button-secondary:hover {
+            background: var(--color-accent);
+            color: var(--color-text-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .rating-summary {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .review-header {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                align-items: flex-start;
+            }
+
+            .reviews-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .rating-bar {
+                gap: var(--spacing-sm);
+            }
+
+            .rating-label {
+                min-width: 50px;
+                font-size: var(--font-size-xs);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .review-card {
+                padding: var(--spacing-lg);
+            }
+
+            .reviewer-info {
+                flex-direction: column;
+                text-align: center;
+                gap: var(--spacing-sm);
+            }
+
+            .score-number {
+                font-size: 2.5rem;
+            }
+        }
+
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, rgba(52, 58, 64, 0.2), rgba(73, 80, 87, 0.1));
+            text-align: center;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-text-light);
+            backdrop-filter: blur(10px);
+            font-size: var(--font-size-md);
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--color-text-muted);
+        }
+
+        .newsletter-button {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--color-accent);
+            color: var(--color-text-dark);
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: var(--font-size-md);
+        }
+
+        .newsletter-button:hover {
+            background: #ffd700;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, rgba(52, 58, 64, 0.9), rgba(73, 80, 87, 0.8));
+            padding: var(--spacing-4xl) 0 var(--spacing-xl);
+            margin-top: var(--spacing-4xl);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .footer-section h3 {
+            color: var(--color-accent);
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-xl);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-links a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .social-link {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .social-link:hover {
+            color: var(--color-accent);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--spacing-xl);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-text-muted);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-menu {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: var(--font-size-2xl);
+            }
+
+            .hero-subtitle {
+                font-size: var(--font-size-lg);
+            }
+
+            .blog-grid,
+            .features-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .slider {
+                height: 40vh;
+            }
+
+            .features-section {
+                margin-top: 100px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .slider {
+                height: 35vh;
+                top: 100px;
+            }
+
+            .hero-content {
+                padding: var(--spacing-md);
+            }
+
+            .container {
+                padding: 0 var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container glassomorphic">
+            <a href="/" class="header-logo">
+                <img src="https://via.placeholder.com/40x40/d4af37/000000?text=BS" alt="BlogSpark Logo"
+                    class="logo-img">
+                <span>BlogSpark</span>
+            </a>
+            <nav class="header-menu">
+                <a href="#features" class="header-item">Features</a>
+                <a href="#about" class="header-item">About</a>
+                <a href="/user/login" class="header-item header-cta">Login</a>
+                <a href="/user/signup" class="header-item header-cta-primary">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="slider">
+        <div class="slider-item" data-slider-item-active>
+            <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                alt="Writing Journey">
+        </div>
+        <div class="slider-item">
+            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                alt="Creative Writing">
+        </div>
+        <div class="slider-item">
+            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                alt="Publishing">
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">Ignite Your Writing Journey</h1>
+            <p class="hero-subtitle">Create, Share, and Discover Amazing Stories</p>
+            <a href="/user/login" class="hero-cta">Start Writing Today</a>
+        </div>
+
+        <button class="slider-nav" data-slider-button="prev">‹</button>
+        <button class="slider-nav" data-slider-button="next">›</button>
+
+        <div class="slider-indicators">
+            <span data-slider-indicator-active></span>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section section">
+        <div class="container">
+            <h2 class="section-title">Why Choose BlogSpark?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14,2 14,8 20,8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    <h3 class="feature-title">Easy Writing</h3>
+                    <p class="feature-description">Intuitive editor with rich formatting options to bring your ideas to
+                        life effortlessly.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="m22 21-3-3m0 0a5.5 5.5 0 1 1-7.8-7.8 5.5 5.5 0 0 1 7.8 7.8Z" />
+                    </svg>
+                    <h3 class="feature-title">Connect & Share</h3>
+                    <p class="feature-description">Build your audience and connect with fellow writers in our vibrant
+                        community.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <h3 class="feature-title">Get Discovered</h3>
+                    <p class="feature-description">Showcase your talent and get featured in our curated collections of
+                        outstanding content.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section section">
+        <div class="container">
+            <h2 class="section-title">Join Our Growing Community</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Active Writers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Published Blogs</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100K+</span>
+                    <span class="stat-label">Monthly Readers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">25+</span>
+                    <span class="stat-label">Countries</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Blogs Section -->
+    <section class="featured-blogs section">
+        <div class="container">
+            <h2 class="section-title">Featured Stories</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                        alt="Featured Blog 1" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <h3 class="blog-card-title">The Future of Digital Storytelling</h3>
+                        <p class="blog-card-excerpt">Exploring how technology is reshaping the way we tell and consume
+                            stories in the digital age...</p>
+                        <div class="blog-card-meta">
+                            <span class="blog-author">By Sarah Johnson</span>
+                            <span class="blog-date">Dec 15, 2024</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                        alt="Featured Blog 2" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <h3 class="blog-card-title">Writing Tips from Bestselling Authors</h3>
+                        <p class="blog-card-excerpt">Discover the secrets and techniques used by successful authors to
+                            craft compelling narratives...</p>
+                        <div class="blog-card-meta">
+                            <span class="blog-author">By Michael Chen</span>
+                            <span class="blog-date">Dec 12, 2024</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                        alt="Featured Blog 3" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <h3 class="blog-card-title">Building Your Personal Brand</h3>
+                        <p class="blog-card-excerpt">Learn how to establish yourself as a thought leader and build a
+                            loyal readership...</p>
+                        <div class="blog-card-meta">
+                            <span class="blog-author">By Emma Rodriguez</span>
+                            <span class="blog-date">Dec 10, 2024</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="section-cta">
+                <a href="/blogs" class="cta-button">Explore All Stories</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Reviews Section -->
+    <section class="reviews-section section">
+        <div class="container">
+            <h2 class="section-title">What Our Writers Say</h2>
+            <p class="section-subtitle">Join thousands of satisfied writers who trust BlogSpark</p>
+
+            <!-- Overall Rating Display -->
+            <div class="overall-rating">
+                <div class="rating-summary">
+                    <div class="rating-score">
+                        <span class="score-number">4.8</span>
+                        <div class="stars-display">
+                            <div class="stars-container">
+                                <div class="stars-background">★★★★★</div>
+                                <div class="stars-filled" style="width: 96%;">★★★★★</div>
+                            </div>
+                        </div>
+                        <span class="rating-text">out of 5 stars</span>
+                    </div>
+                    <div class="rating-breakdown">
+                        <div class="rating-bar">
+                            <span class="rating-label">5 stars</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 78%;"></div>
+                            </div>
+                            <span class="rating-count">1,234</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">4 stars</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 18%;"></div>
+                            </div>
+                            <span class="rating-count">289</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">3 stars</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 3%;"></div>
+                            </div>
+                            <span class="rating-count">45</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">2 stars</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 1%;"></div>
+                            </div>
+                            <span class="rating-count">12</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">1 star</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 0.5%;"></div>
+                            </div>
+                            <span class="rating-count">3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Reviews -->
+            <div class="featured-reviews">
+                <div class="reviews-grid">
+                    <!-- Review Card 1 -->
+                    <div class="review-card featured-review">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+                                        alt="Sarah Johnson">
+                                </div>
+                                <div class="reviewer-details">
+                                    <h4 class="reviewer-name">Sarah Johnson</h4>
+                                    <p class="reviewer-title">Professional Blogger</p>
+                                    <div class="review-date">2 weeks ago</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <div class="stars-container">
+                                    <div class="stars-background">★★★★★</div>
+                                    <div class="stars-filled" style="width: 100%;">★★★★★</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <h5 class="review-title">"Absolutely game-changing platform!"</h5>
+                            <p class="review-text">BlogSpark has revolutionized my writing workflow. The intuitive
+                                editor, seamless publishing process, and engaged community have helped me grow my
+                                audience by 300% in just 6 months. The analytics dashboard is incredibly detailed, and
+                                the monetization features actually work!</p>
+                            <div class="review-tags">
+                                <span class="review-tag">Easy to Use</span>
+                                <span class="review-tag">Great Community</span>
+                                <span class="review-tag">Excellent Support</span>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <div class="review-helpful">
+                                <button class="helpful-btn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M7.5 12L10.5 15L16.5 9" />
+                                    </svg>
+                                    Helpful (234)
+                                </button>
+                            </div>
+                            <div class="review-verified">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Verified Writer
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Card 2 -->
+                    <div class="review-card featured-review">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+                                        alt="Michael Chen">
+                                </div>
+                                <div class="reviewer-details">
+                                    <h4 class="reviewer-name">Michael Chen</h4>
+                                    <p class="reviewer-title">Tech Writer & Entrepreneur</p>
+                                    <div class="review-date">1 month ago</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <div class="stars-container">
+                                    <div class="stars-background">★★★★★</div>
+                                    <div class="stars-filled" style="width: 100%;">★★★★★</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <h5 class="review-title">"Perfect for professional content creators"</h5>
+                            <p class="review-text">As someone who manages multiple blogs, BlogSpark's multi-account
+                                dashboard is a lifesaver. The SEO tools are top-notch, the collaboration features are
+                                seamless, and the customer support team is incredibly responsive. I've tried every major
+                                platform, and this is by far the best.</p>
+                            <div class="review-tags">
+                                <span class="review-tag">SEO Tools</span>
+                                <span class="review-tag">Multi-account</span>
+                                <span class="review-tag">Fast Support</span>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <div class="review-helpful">
+                                <button class="helpful-btn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M7.5 12L10.5 15L16.5 9" />
+                                    </svg>
+                                    Helpful (189)
+                                </button>
+                            </div>
+                            <div class="review-verified">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Verified Writer
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="reviews-cta">
+                <a href="/reviews" class="cta-button-primary">View All Reviews</a>
+                <a href="/user/signup" class="cta-button-secondary">Join Our Community</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section section">
+        <div class="container">
+            <h2 class="section-title">Stay Inspired</h2>
+            <p class="section-subtitle">Get the latest stories and writing tips delivered to your inbox</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BlogSpark</h3>
+                    <p>Igniting creativity and connecting writers worldwide. Join our community and start your writing
+                        journey today.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Instagram</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/features">Features</a></li>
+                        <li><a href="/pricing">Pricing</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Writers</h3>
+                    <ul class="footer-links">
+                        <li><a href="/user/signup">Join Community</a></li>
+                        <li><a href="/guidelines">Writing Guidelines</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                        <li><a href="/support">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BlogSpark. All rights reserved. Made with ❤️ for writers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-item');
+        const indicators = document.querySelectorAll('.slider-indicators span');
+        const prevBtn = document.querySelector('[data-slider-button="prev"]');
+        const nextBtn = document.querySelector('[data-slider-button="next"]');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.removeAttribute('data-slider-item-active');
+                if (i === index) {
+                    slide.setAttribute('data-slider-item-active', '');
+                }
+            });
+
+            indicators.forEach((indicator, i) => {
+                indicator.removeAttribute('data-slider-indicator-active');
+                if (i === index) {
+                    indicator.setAttribute('data-slider-indicator-active', '');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
+        });
+
+        // Auto-slide (optional)
+        setInterval(nextSlide, 5000);
+
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = this.querySelector('.newsletter-input').value;
+            alert(`Thank you for subscribing with email: ${email}`);
+            this.reset();
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced interactive features
+        document.addEventListener('DOMContentLoaded', function () {
+            // Animate rating bars on scroll
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bars = entry.target.querySelectorAll('.bar-fill');
+                        bars.forEach((bar, index) => {
+                            setTimeout(() => {
+                                bar.style.transform = 'scaleX(1)';
+                                bar.style.transformOrigin = 'left';
+                            }, index * 200);
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            const ratingBreakdown = document.querySelector('.rating-breakdown');
+            if (ratingBreakdown) {
+                // Initially hide bars
+                const bars = ratingBreakdown.querySelectorAll('.bar-fill');
+                bars.forEach(bar => {
+                    bar.style.transform = 'scaleX(0)';
+                    bar.style.transition = 'transform 0.8s ease-out';
+                });
+
+                observer.observe(ratingBreakdown);
+            }
+
+            // Helpful button interactions
+            const helpfulBtns = document.querySelectorAll('.helpful-btn');
+            helpfulBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const currentText = this.textContent;
+                    const countMatch = currentText.match(/\((\d+)\)/);
+                    if (countMatch) {
+                        const currentCount = parseInt(countMatch[1]);
+                        const newCount = currentCount + 1;
+                        this.innerHTML = this.innerHTML.replace(/\(\d+\)/, `(${newCount})`);
+                        this.style.color = 'var(--color-accent)';
+                        this.disabled = true;
+
+                        // Add a subtle animation
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 150);
+                    }
+                });
+            });
+
+            // Review card hover effects enhancement
+            const reviewCards = document.querySelectorAll('.review-card');
+            reviewCards.forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.style.background = 'rgba(255, 255, 255, 0.08)';
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    this.style.background = 'rgba(255, 255, 255, 0.05)';
+                });
+            });
+
+            // Star rating hover effect
+            const starContainers = document.querySelectorAll('.stars-filled');
+            starContainers.forEach(container => {
+                container.addEventListener('mouseenter', function () {
+                    this.style.textShadow = '0 0 15px rgba(212, 175, 55, 0.8)';
+                });
+
+                container.addEventListener('mouseleave', function () {
+                    this.style.textShadow = '0 0 10px rgba(212, 175, 55, 0.5)';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
