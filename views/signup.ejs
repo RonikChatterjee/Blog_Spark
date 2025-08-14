@@ -4,41 +4,51 @@
         <div class="glassomorphic signup-header">
             <h3>Sign up</h3>
         </div>
+        <div class="signup-promo">
+            <h4>Unleash Your <span class="highlight">Creative Voice</span></h4>
+            <p>Transform your ideas into compelling stories that captivate readers worldwide</p>
+        </div>
+        <div class="signup-options-container">
+            <ul class="signup-options">
+                <li><img src="/svg/googleIcon.svg" alt="google-icon"></li>
+                <li><img src="/svg/githubIcon.svg" alt="github-icon"></li>
+                <li><img src="/svg/facebookIcon.svg" alt="facebook-icon"></li>
+            </ul>
+        </div>
+        <div class="separator">or</div>
         <div class="signup-content">
             <ul class="signup-field-options">
                 <!-- Row 1: First Name & Last Name -->
                 <li class="signup-items horizontal-group">
                     <div class="signup-field">
                         <label for="firstname">First Name</label>
-                        <input type="text" name="firstname" id="firstname">
+                        <input type="text" name="firstname" id="firstname" placeholder=" ">
                     </div>
                     <div class="signup-field">
                         <label for="lastname">Last Name</label>
-                        <input type="text" name="lastname" id="lastname">
+                        <input type="text" name="lastname" id="lastname" placeholder=" ">
                     </div>
                 </li>
 
                 <!-- Row 2: Gender & Contact -->
                 <li class="signup-items horizontal-group">
                     <div class="signup-field">
-                        <fieldset>
-                            <legend>Gender</legend>
-                            <div class="radio-group">
-                                <label for="male" class="radio-option">
-                                    <input type="radio" name="gender" value="male" id="male"> Male
-                                </label>
-                                <label for="female" class="radio-option">
-                                    <input type="radio" name="gender" value="female" id="female"> Female
-                                </label>
-                                <label for="other" class="radio-option">
-                                    <input type="radio" name="gender" value="other" id="other"> Other
-                                </label>
-                            </div>
-                        </fieldset>
+                        <label id="gender">Gender</label>
+                        <div class="radio-group">
+                            <label for="male" class="radio-option">
+                                <input type="radio" name="gender" value="male" id="male"> Male
+                            </label>
+                            <label for="female" class="radio-option">
+                                <input type="radio" name="gender" value="female" id="female"> Female
+                            </label>
+                            <label for="other" class="radio-option">
+                                <input type="radio" name="gender" value="other" id="other"> Other
+                            </label>
+                        </div>
                     </div>
                     <div class="signup-field">
                         <label for="contact">Contact</label>
-                        <input type="text" name="contact" id="contact">
+                        <input type="text" name="contact" id="contact" placeholder=" ">
                     </div>
                 </li>
 
@@ -46,7 +56,7 @@
                 <li class="signup-items full-width">
                     <div class="signup-field">
                         <label for="email">Email</label>
-                        <input type="email" name="email" id="email">
+                        <input type="email" name="email" id="email" placeholder=" ">
                     </div>
                 </li>
 
@@ -54,7 +64,7 @@
                 <li class="signup-items full-width">
                     <div class="signup-field">
                         <label for="password">Password</label>
-                        <input type="password" name="password" id="password">
+                        <input type="password" name="password" id="password" placeholder=" ">
                     </div>
                 </li>
             </ul>

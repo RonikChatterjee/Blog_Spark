@@ -97,7 +97,8 @@
   transform: translateY(-1px);
 }
 
-.login-items:has(input:focus) label {
+.login-items:has(input:focus) label,
+.login-items:has(input:not(:placeholder-shown)) label {
   opacity: 0.6;
   transform: translate(15px, 0);
 }
