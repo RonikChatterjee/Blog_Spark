@@ -20,7 +20,7 @@
 .signup-container {
   background: rgba(0, 0, 0, 0.3);
   height: 70vh;
-  max-height: 800px;
+  max-height: 548px;
   width: 90%;
   max-width: 350px;
   margin: 0 auto;
@@ -36,6 +36,7 @@
   border: var(--color-border-gold);
 }
 
+/* Header Styling */
 .signup-header {
   width: 100%;
   max-width: 350px;
@@ -265,6 +266,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 .signup-btn {
@@ -275,7 +277,10 @@
   padding: var(--spacing-sm) 0;
   border: none;
   border-radius: var(--radius-md);
+  opacity: 0.9;
+  font-family: var(--font-family-primary);
   font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
   box-shadow: var(--shadow-accent);
   cursor: pointer;
   transition: all var(--transition-normal);
@@ -284,6 +289,7 @@
 .signup-btn:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-accent-hover);
+  opacity: 1;
 }
 
 .signup-footer a {
@@ -293,6 +299,8 @@
   margin-top: var(--spacing-lg);
   overflow: hidden;
   position: relative;
+  opacity: 0.8;
+  transition: all var(--transition-very-fast);
 }
 
 .signup-footer a::after {
@@ -302,13 +310,17 @@
   left: 0;
   width: 0;
   height: 1px;
-  background: linear-gradient(to right, var(--color-accent), #f1c40f);
+  background: linear-gradient(
+    to right,
+    var(--color-accent),
+    var(--color-bright-accent)
+  );
   transition: all var(--transition-very-fast);
 }
 
 .signup-footer a:hover {
   opacity: 1;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   text-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
   color: var(--color-accent);
   font-weight: var(--font-weight-medium);
@@ -320,7 +332,6 @@
 
 @media (min-width: 648px) {
   .signup-container {
-    max-height: 600px;
     max-width: 900px;
     display: grid;
     grid-template-columns: 1fr 300px;
@@ -357,6 +368,7 @@
       var(--color-bright-accent)
     );
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 2px 2px 32px rgba(0, 0, 0, 0.6);
     opacity: 0.9;
@@ -364,7 +376,7 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
-  .highlight {
+  .signup-promo .highlight {
     color: var(--color-bright-accent);
     font-weight: var(--font-weight-bold);
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
@@ -427,5 +439,9 @@
     /* right: 0; */
     /* left: unset; */
     /* border-top-left-radius: 0; */
+  }
+
+  .signup-content {
+    max-width: 350px;
   }
 }
