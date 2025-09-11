@@ -31,59 +31,36 @@ function contractMobileNavbar() {
 }
 
 // --------------- For Desktop View ----------------
+document
+  .getElementById('user-option-logout')
+  .addEventListener('click', event => {
+    event.preventDefault()
+    logoutUser()
+  })
 
-// getUserProfile()
-logoutUser()
+document
+  .getElementById('user-option-logout-mobile')
+  .addEventListener('click', event => {
+    event.preventDefault()
+    logoutUser()
+  })
 
-function getUserProfile() {
-  document
-    .getElementById('user-option-profile')
-    .addEventListener('click', async event => {
-      event.preventDefault()
-      try {
-        const resJson = await fetch('/user/profile', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        })
-        const resValue = await resJson.json()
-        console.log('resJson -> ', resJson)
-        console.log('resValue -> ', resValue)
-      } catch (err) {
-        showErrorPopup(
-          'Error',
-          'Failed to fetch user profile. Please try again later.',
-          () => {
-            window.location.href = 'http://localhost:8000'
-          }
-        )
-      }
+async function logoutUser() {
+  try {
+    const resJson = await fetch('/user/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
     })
-}
-
-function logoutUser() {
-  document
-    .getElementById('user-option-logout')
-    .addEventListener('click', async event => {
-      event.preventDefault()
-      try {
-        const resJson = await fetch('/user/logout', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        })
-        if (resJson.status === 200) {
-          window.location.href = 'http://localhost:8000'
-        }
-      } catch (err) {
-        showErrorPopup(
-          'Error',
-          'Failed to logout. Please try again later.'
-        )
-      }
-    })
+    if (resJson.status === 200) {
+      window.location.href = '/'
+    }
+  } catch (err) {
+    showErrorPopup(
+      'Error',
+      'Failed to logout. Please try again later.'
+    )
+  }
 }

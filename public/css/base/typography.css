@@ -21,7 +21,7 @@ h6 {
   font-family: var(--font-family-primary);
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
-  margin-bottom: var(--spacing-md);
+  /* margin-bottom: var(--spacing-md); */
   color: var(--color-text-dark);
 }
 

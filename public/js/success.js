@@ -8,47 +8,41 @@ function showSuccessPopup(
   document.getElementById('success-message').innerText =
     successMessage || 'Operation completed successfully.'
 
-  const successBackdrop = document.getElementById('success-backdrop')
-  successBackdrop.classList.remove('hidden')
+  const successContainer = document.getElementById(
+    'success-container'
+  )
+  successContainer.classList.add('showSuccess')
 
-  // Add event listener to close the popup when clicking outside of it
-  successBackdrop.addEventListener('click', event => {
-    if (
-      event.target === successBackdrop &&
-      !successBackdrop.classList.contains('hidden')
-    ) {
-      hideSuccessPopup()
-      if (successCallback) successCallback()
-    }
-  })
   // Add event listener to close the popup when clicking the OK button
   document
     .getElementById('success-ok-btn')
-    .addEventListener('click', () => {
-      hideSuccessPopup()
-      if (successCallback) successCallback()
+    .addEventListener('click', async () => {
+      if ((await hideSuccessPopup()) && successCallback) {
+        successCallback()
+      }
     })
-  // On pressing the Escape key, Enter key or Space key, close the popup
-  document.addEventListener('keydown', event => {
-    if (
-      event.key === 'Escape' ||
-      event.key === 'Enter' ||
-      event.key === ' '
-    ) {
-      event.preventDefault()
-      hideSuccessPopup()
-      if (successCallback) successCallback()
+  // Automatically hide the popup after 4 seconds
+  setTimeout(async () => {
+    if ((await hideSuccessPopup()) && successCallback) {
+      successCallback()
     }
-  })
-
-  // Automatically hide the popup after 5 seconds
-  setTimeout(() => {
-    hideSuccessPopup()
-    if (successCallback) successCallback()
-  }, 5000)
+  }, 4000)
 }
 
 function hideSuccessPopup() {
-  const successBackdrop = document.getElementById('success-backdrop')
-  successBackdrop.classList.add('hidden')
+  return new Promise(resolve => {
+    const successContainer = document.getElementById(
+      'success-container'
+    )
+    successContainer.classList.add('hideSuccess')
+    successContainer.classList.remove('showSuccess')
+    setTimeout(() => {
+      successContainer.classList.add('takeSuccessPopupBellow')
+      successContainer.classList.remove('hideSuccess')
+      setTimeout(() => {
+        successContainer.classList.remove('takeSuccessPopupBellow')
+        resolve(true)
+      }, 300)
+    }, 300)
+  })
 }

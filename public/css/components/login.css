@@ -23,14 +23,14 @@
 .login-container {
   background: rgba(0, 0, 0, 0.3);
   height: 62vh;
-  max-height: 484px;
+  min-height: 400px;
   width: 90%;
   max-width: 350px;
   margin: 0 auto;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   position: relative;
-  top: 0;
+  top: 20px;
   overflow: hidden;
 }
 
@@ -70,10 +70,11 @@
   text-align: center;
   color: var(--color-accent);
   font-family: var(--font-family-primary);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-extrabold);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-xs);
 }
 
 /* Login-Promo */
@@ -103,13 +104,26 @@
   display: none;
 }
 
+.login-content-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+  top: 70px;
+  left: 0px;
+}
+
+.login-content-wrapper::-webkit-scrollbar {
+  width: 0px;
+}
+
 /* Login Content */
 .login-content {
   width: 100%;
-  height: 196px;
-  padding: var(--spacing-xl) var(--spacing-lg);
+  height: 250px;
+  padding: var(--spacing-xxl) var(--spacing-lg);
   position: relative;
-  top: 70px; /* Adjusted for header height */
   left: 0;
   overflow: hidden;
   /* border: 2px solid white; */
@@ -117,24 +131,26 @@
 
 .login-field-options {
   width: 100%;
+  height: 100%;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-xxl);
   position: relative;
+  /* border: 2px solid white; */
 }
 
 .login-items {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  position: relative;
 }
 
 .login-items label {
-  font-weight: var(--font-weight-medium);
   color: var(--color-text-light);
   font-size: var(--font-size-sm);
-  letter-spacing: 0.25px;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 1px;
   opacity: 0.8;
   position: absolute;
   transform: translate(16px, 16px);
@@ -148,7 +164,8 @@
   background-color: rgba(0, 0, 0, 0.05);
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 1px;
   font-family: inherit;
   backdrop-filter: blur(10px);
   width: 100%;
@@ -166,13 +183,19 @@
   transform: translate(16px, -24px);
 }
 
+.login-items img {
+  position: absolute;
+  right: 12px;
+  top: 13px;
+}
+
 /* Login Actions */
 .login-footer {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  top: 70px; /* Adjusted for header height */
+  top: -5px;
   left: 0;
   padding: 0 var(--spacing-lg);
   padding-bottom: var(--spacing-sm);
@@ -251,7 +274,7 @@
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   position: relative;
-  top: 70px; /* Adjusted for header height */
+  top: -5px;
   opacity: 0.9;
 }
 
@@ -281,7 +304,7 @@
 .login-options-container {
   width: 100%;
   position: relative;
-  top: 70px;
+  top: -10px;
   /* border: 2px solid white; */
 }
 
@@ -300,6 +323,124 @@
 
 .login-options li img:hover {
   transform: translateY(-3px) scale(1.1);
+}
+
+/*************** Forgot Password Overlay ***************/
+.forgot-password-overlay-backdrop {
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  /* border: 2px solid var(--color-border-gold); */
+}
+
+.forgot-password-overlay-container {
+  width: 90%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-lg);
+  margin: 300px auto;
+  padding: var(--spacing-lg);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  /* border: 2px solid white; */
+}
+
+.forgot-password-overlay-container:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(0);
+}
+
+.forgot-password-overlay-container h4 {
+  color: var(--color-text-dark);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.forgot-password-overlay-value {
+  width: 90%;
+  max-width: 275px;
+  position: relative;
+}
+
+.forgot-password-overlay-value label {
+  width: 100%;
+  color: var(--color-text-dark);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: var(--spacing-sm);
+  transform: translate(-5px, 0px);
+  /* border: 2px solid red; */
+}
+
+.forgot-password-overlay-value input {
+  width: 100%;
+  color: var(--color-text-dark);
+  background: rgba(255, 255, 255, 0.6);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-sm);
+  border: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.forgot-password-overlay-value input:focus {
+  outline: none;
+  border: 1px solid var(--color-border-gold);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.forgot-password-overlay-action {
+  width: 90%;
+  max-width: 275px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding-top: var(--spacing-sm);
+  position: relative;
+  /* border: 2px solid white; */
+}
+
+.forgot-password-overlay-action button {
+  width: 125px;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent),
+    var(--color-bright-accent),
+    var(--color-accent)
+  );
+  color: var(--color-text-dark);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  box-shadow: var(--shadow-accent);
+  border-radius: var(--radius-md);
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.forgot-password-overlay-action button:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-accent-hover);
+  opacity: 0.9;
 }
 
 @media (min-width: 648px) {
@@ -485,24 +626,26 @@
     grid-column: 2 / span 1;
   }
 
+  .login-items label,
+  .login-items input {
+    font-size: var(--font-size-base);
+  }
+
   .login-footer {
     grid-column: 2 / span 1;
-    top: 56px;
   }
 
   .separator {
     grid-column: 2 / span 1;
-    top: 40px;
   }
 
   .separator::before,
   .separator::after {
-    top: 17px;
+    top: 13px;
   }
 
   .login-options-container {
     grid-column: 2 / span 1;
-    top: 30px;
   }
 }
 

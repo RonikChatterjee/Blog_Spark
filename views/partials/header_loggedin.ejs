@@ -7,33 +7,36 @@
         <div class="user-menu">
             <div class="user-link">
                 <span class="user-name">
-                    username
+                    <%= locals.fullname %>
                 </span>
-                <!-- <img src="/svg/userAvatar.svg" alt="User Profile" class="user-img"> -->
-                <svg class="user-img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    viewBox="0 0 24 24">
-                    <path fill-rule="evenodd"
-                        d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
-                        clip-rule="evenodd" />
-                </svg>
+                <% if (locals.profileImg) { %>
+                    <img class="user-img" src="<%= locals.profileImg %>" alt="User Profile Image">
+                    <% } else { %>
+                        <svg class="user-img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path fill-rule="evenodd"
+                                d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <% } %>
             </div>
             <ul class="user-option-container" id="user-option-container">
                 <li class="user-options glassomorphic" id="user-option-profile">
                     <a href="/user/profile">My Profile</a>
                 </li>
                 <li class="user-options glassomorphic" id="user-option-logout">
-                    <a href="/user/logout">Logout</a>
+                    <a href="#">Logout</a>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="mobile-navbar-container glassomorphic">
+    <div class="glassomorphic mobile-navbar-container">
         <ul class="mobile-navbar-menu contract-mobile-navbar-menu" id="mobile-navbar-menu">
-            <li class="mobile-navbar-option">Home</li>
-            <li class="mobile-navbar-option">My Profile</li>
-            <li class="mobile-navbar-option">My Blogs</li>
-            <li class="mobile-navbar-option">Create Blogs</li>
-            <li class="mobile-navbar-option">Logout</li>
+            <li class="mobile-navbar-option"><a href="/">Home</a></li>
+            <li class="mobile-navbar-option"><a href="/user/profile">My Profile</a></li>
+            <li class="mobile-navbar-option"><a href="/user/blogs">My Blogs</a></li>
+            <li class="mobile-navbar-option"><a href="/user/create">Create Blogs</a></li>
+            <li class="mobile-navbar-option" id="user-option-logout-mobile"><a href="#">Logout</a></li>
         </ul>
         <div class="mobile-navbar-action">
             <div class="mobile-navbar-action-button hidden" id="mobile-navbar-action-up">

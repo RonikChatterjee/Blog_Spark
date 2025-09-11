@@ -41,6 +41,26 @@ function validateFormData(data) {
 }
 
 // ----------------Validate individual fields--------------------
+function validateBio(bio) {
+  if (
+    bio === undefined ||
+    bio === null ||
+    bio === '' ||
+    bio.trim() === ''
+  ) {
+    return { isValid: false, message: 'Enter your bio' }
+  }
+  // Check the length of the bio
+  if (bio.length < 10 || bio.length > 300) {
+    return {
+      isValid: false,
+      message:
+        'Invalid bio.\n Bio should be between 10 and 300 characters long.',
+    }
+  }
+  return { isValid: true }
+}
+
 function validateName(name) {
   if (
     name === undefined ||
@@ -118,11 +138,11 @@ function validateContact(contact) {
         'Invalid contact number.\n Contact number should be a valid Indian mobile number.',
     }
   }
-  if (cleanedNumber.length !== 10) {
+  if (cleanedNumber.length < 10 || cleanedNumber.length > 15) {
     return {
       isValid: false,
       message:
-        'Invalid contact number.\n Contact number should contain 10 digits.',
+        'Invalid contact number.\n Contact number should contain 10 to 15 digits.',
     }
   }
   return { isValid: true }
@@ -240,11 +260,41 @@ function validatePassword(password) {
   return { isValid: true }
 }
 
+// ------------------------Other Field Validation------------------------
+
+function validateOTP(otp) {
+  // Check if OTP is valid
+  if (
+    otp === undefined ||
+    otp === null ||
+    otp === '' ||
+    otp.trim() === ''
+  ) {
+    return {
+      isValid: false,
+      message: 'Enter the OTP',
+    }
+  }
+  // Remove leading/trailing whitespace
+  const trimmedOTP = otp.trim()
+  // Check if OTP is exactly 6 characters
+  const regex = /^[^\s]{6}$/
+  if (!regex.test(trimmedOTP)) {
+    return {
+      isValid: false,
+      message: 'Invalid OTP.\n Enter a valid OTP.',
+    }
+  }
+  return { isValid: true }
+}
+
 export {
   validateFormData,
+  validateBio,
   validateName,
   validateGender,
   validateContact,
   validateEmail,
   validatePassword,
+  validateOTP,
 }

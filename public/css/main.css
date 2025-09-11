@@ -4,11 +4,42 @@
 
 /* Base Styles */
 @import url('./base/variables.css');
-@import url('./base/typography.css');
+/* @import url('./base/typography.css'); */
 @import url('./base/galaxy.css');
 
 /* Utilities */
 @import url('./utilities/animations.css');
 @import url('./utilities/responsive.css');
 
-/* Icons */
+/* Main Section Styles */
+.main-section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 120px;
+  position: fixed;
+}
+
+@media (min-width: 648px) {
+  .main-section {
+    margin-top: 96px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main-section {
+    margin-top: 112px;
+  }
+}
+
+/* Main Container Styles for Rendered Content */
+.main-container {
+  width: 100%;
+  max-width: 840px;
+  background: transparent;
+  position: relative;
+  z-index: -1;
+  /* border: 5px solid white; */
+}

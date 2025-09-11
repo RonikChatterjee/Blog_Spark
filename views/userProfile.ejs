@@ -1,48 +1,196 @@
 <link rel="stylesheet" href="/css/components/user_profile.css">
-<div class="user-profile-container">
-    <h1>User Profile</h1>
-    <div class="user-profile-menu">
-        <div class="user-profile-item">
-            <div class="profile-img">
-                <img src="/images/user_avatar.png" alt="User Avatar" class="user-avatar">
+<script src="/socket.io/socket.io.js"></script>
+<script type="module" defer src="/js/userprofile.js"></script>
+<% if (!locals.emailVerified) { %>
+    <script type="module">
+        showWarningPopup('Warning', 'Please verify your email id. first')
+    </script>
+    <% } %>
+        <!-- <div class="user-profile-backdrop"> -->
+        <form class="glassomorphic user-profile-container">
+            <div class="user-profile-menu">
+                <div class="user-profile-image-section">
+                    <div class="user-profile-cover-img">
+                        <img src="<%= locals.coverImg %>" alt="User Cover Avatar">
+                        <!-- Cover image editing icon -->
+                        <div class="edit-cover-img" data-edit-cover-image>
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M7.5 4.586A2 2 0 0 1 8.914 4h6.172a2 2 0 0 1 1.414.586L17.914 6H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1.086L7.5 4.586ZM10 12a2 2 0 1 1 4 0 2 2 0 0 1-4 0Zm2-4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="user-profile-img">
+                        <img src="<%= locals.profileImg %>" alt="User Avatar">
+                        <!-- Avatar editing icon -->
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEt0lEQVR4nN1aWU8TURTuM1Gj4pMaH1ye3F9w17hrolGiv0ENaqIh7luiAipuKPii0RfjEn0QcBdMtIRVC6VoTDTIjtBSBKZQOm2P+W7nDuJ0amcY2oEvmVicO/feb+65557znbHQKIGFRgksRnXkFkTKq3TRsae1lHyjhuafqqDJB4ppfIqVXfi94PQndg9t8qtc1OkRzUGkzxegByVttOWag8bs/kgJu7RdY/dYaet1Bz0sbSOvGIg9kV5fgLLeNtL0Q6XypCakFNGmK9WU8byercy3Fg974z5/kF34jf/DvfT8etp42c6e4c/POFxKWe+a2MuJCZFX1R00+3i5PIHlaTa6Z22lrl7tZvLbI9Ldj620LM0m9zfnRDm9cbiHjwje1P773+UBl563UcEX7QOq4W2Nmxaf+yz3f+DBd02rExWRX139bOIYYNK+Irr1vpn8gSAZDX8gSNkFTZS4t0he7baufmOI/HT2seVGx/A6X5oFGm44GgXm9TDm3JMVbA5DIuLs9skdrkivJFePj2KFTo9Iay9WsbGxJ2EVuojAPrk5rb5QRYLXT7GG4PXTqoxK2cwi7RlVInxjw5xw2MULHcKAVcABaCICF8s3diz2RDR7JlFyAPBuURHBYcfPCXgns+BmQZO8+cOZmILI9TeN8jkxHC5WL8RAkBadDZ0zIBWRCOIdhApoXPjVuMPOKLx2hEweodG/qzKICII37iHMiGCQZE/6uKxNnQiiWDRC7GQU4D7hvo3CnQ8tbI7bshzhicDFIqxGRKonAFQDj52MPCjHp1hp3B7roHnKRHJtLjbg5qvVZCSMJgJsyLSzPl/YO0hB5OiTWnYT+YTZiZzPq2N9Hn9aqySCFBQ3n1e5TE8kV7Kendk1SiLzTobCAGRxZifytdnD+kTooiAy5WAxu2l0XDUcRFw9PtbntNQSJRF4AtzsF7Wf5usuhcJtPRee1QqvGJB1AtMQWZ9pN5bIlBFkWs7uCKY1ajZ7suR+oQCancgzm1Pd/fIDEeLZiD4Q8ypDhwzUwpESorwMF6IgGONBIxRAsxJxCwNBY3efP3wYD0EZg0LGNApwzXpcrBpuS2H89hsqYTzwSEqsoMWaNbFack5KrMrbI6e6M6VU952KWhFPvLSHUt1ZR8oUZQiF+ABpH43B3GziQ5IkPuQUKtUdBREk9VzrhaBsFmRJLxiHYLiiUFiBDvUJPARRDOJYvGFvEGiiJNCplTJUJVPIk/wNQLaMF5zdPibKYS6pD3/oE7EhC6EDKCHxELF7vH5amR4SsfFvpDqjprIC/o4V3IJIa6SyAvbs/wo+URV6+NKCVHUM9oy9QZDHRFRe5xpioYcDb4ObGRwAtFe4Q6MhBoLMO/GNDXNqj9IKNBVDuQPABUFZT/VV7cRGKSNJOif4xtZSe9dcnkZ9gi87V+0hY+r5igH7ALETDzsSJFPSUy3W9cEAVgfmxcMZXIhIEV6n5dcz3QlZHNw2NABc+I2iEZIitEFbrhPwsCOnsFn3FxBD+oQDg0IVh6CMFECr8IBQHJkpAsC4fMIRDhCUocUia9uRXcNqj1MPlsgf1eD3wjOfWHqKNmj7dz4xVFholMAS7wkYhT+DOZWOhk/vlgAAAABJRU5ErkJggg=="
+                            alt="add--v1" data-edit-avatar-image>
+                    </div>
+                    <div class="user-name">
+                        <h3>
+                            <%= locals.fullname %>
+                        </h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0,0,256,256"
+                            data-edit-username>
+                            <g fill="currentColor" fill-rule="nonzero" stroke="none" stroke-width="1"
+                                stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray=""
+                                stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none"
+                                text-anchor="none" style="mix-blend-mode: normal">
+                                <g transform="translate(-22.15284,22.60336) rotate(-10) scale(5.12,5.12)">
+                                    <path
+                                        d="M46.57422,3.42578c-0.94922,-0.94922 -2.19531,-1.42578 -3.44141,-1.42578c-1.24609,0 -2.49219,0.47656 -3.44141,1.42578c0,0 -0.07031,0.06641 -0.16016,0.16016c-0.00781,0.00781 -0.01953,0.01172 -0.02734,0.01953l-35.20312,35.19922c-0.12109,0.125 -0.21094,0.27734 -0.25781,0.44922l-2.00781,7.48828c-0.09375,0.34375 0.00391,0.71094 0.25781,0.96484c0.19141,0.19141 0.44531,0.29297 0.70703,0.29297c0.08594,0 0.17188,-0.01172 0.25781,-0.03516l7.48828,-2.00781c0.17188,-0.04687 0.32422,-0.13672 0.44922,-0.26172l35.19922,-35.19531c0.01172,-0.01172 0.01563,-0.02734 0.02344,-0.03906c0.08984,-0.08984 0.15234,-0.15234 0.15234,-0.15234c1.90625,-1.90234 1.90625,-4.98437 0.00391,-6.88281zM45.16016,4.83984c1.11719,1.11719 1.11719,2.9375 0,4.05469c-0.33203,0.32813 -0.61328,0.61328 -0.85547,0.85547l-4.05469,-4.05469c0.46094,-0.46094 0.85547,-0.85547 0.85547,-0.85547c0.53906,-0.54297 1.26172,-0.83984 2.02734,-0.83984c0.76563,0 1.48438,0.30078 2.02734,0.83984zM5.60547,41.15234l3.24219,3.24219l-4.43359,1.19141z">
+                                    </path>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="user-profile-bio-section">
+                    <textarea placeholder="<%= locals.bio %> " maxlength="300"><%= locals.bio %></textarea>
+                    <button type="submit" disabled>Update Bio</button>
+                </div>
+                <ul class="user-profile-details">
+                    <!-- Gender -->
+                    <li class="user-profile-field-value">
+                        <label for="gender">Gender</label>
+                        <select name="gender" id="gender" style="background: rgba(0, 0, 0, 0.2)">
+                            <option value="<%= locals.gender %>" selected>
+                                <%= locals.gender %>
+                            </option>
+                            <% if (locals.gender==='male' ) { %>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <% } else if (locals.gender==='female' ) { %>
+                                    <option value="male">Male</option>
+                                    <option value="other">Other</option>
+                                    <% } else { %>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <% } %>
+                        </select>
+                    </li>
+                    <!-- Contact -->
+                    <li class="user-profile-field">
+                        <div class="user-profile-field-value">
+                            <label for="contact">Contact</label>
+                            <input type="number" name="contact" id="contact" value="<%= locals.contact %>"
+                                placeholder="<%=locals.contact%>" maxlength="15">
+                        </div>
+                        <div class="user-profile-field-action" data-update-contact>
+                            <span class="hide-component">Invalid contact number</span>
+                            <button type="button" disabled>Update</button>
+                        </div>
+                    </li>
+                    <!-- Email -->
+                    <li class="user-profile-field" data-email-field>
+                        <div class="user-profile-field-value">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" value="<%= locals.email %>"
+                                placeholder="<%= locals.email %>" maxlength="254">
+                        </div>
+                        <div class="user-profile-field-action" data-<%=locals.emailVerified ? 'verified-email'
+                            : 'verify-email' %> >
+                            <span class="hide-component">Invalid email address</span>
+                            <button class="btn-verify-email" type="button">
+                                <%= locals.emailVerified ? 'Verified' : 'Verify' %>
+                            </button>
+                        </div>
+                    </li>
+                    <!-- Password -->
+                    <li class="user-profile-field">
+                        <div class="user-profile-field-value">
+                            <label for="currPassword">Current Password</label>
+                            <input type="password" name="currPassword" id="currPassword" value="">
+                            <img src="../svg/showPasswordIcon.svg" alt="show password icon" srcset=""
+                                data-show-current-password>
+                            <img src="../svg/hidePasswordIcon.svg" alt="hide password icon" srcset=""
+                                data-hide-current-password>
+                        </div>
+                        <div class="user-profile-field-value">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" name="newPassword" id="newPassword" value="">
+                            <img src="../svg/showPasswordIcon.svg" alt="show password icon" srcset=""
+                                data-show-new-password>
+                            <img src="../svg/hidePasswordIcon.svg" alt="hide password icon" srcset=""
+                                data-hide-new-password>
+                        </div>
+                        <div class="user-profile-field-action" data-update-password>
+                            <span class="hide-component">Invalid password</span>
+                            <button type="button" disabled>Change Password</button>
+                        </div>
+                    </li>
+                </ul>
+                <button class="user-profile-field-button">
+                    Delete Account
+                </button>
             </div>
-            <a href="#">Edit profile picture</a>
+        </form>
+        <!-- </div> -->
+        <!-- Update Image Overlay -->
+        <div class="update-img-overlay-backdrop">
+            <div class="update-img-overlay-container">
+                <h4>Update Your Cover Image</h4>
+                <label for="coverImage">
+                    <img src="../svg/uploadFile.svg" alt="upload-file" srcset="">
+                    <p>Browse files to upload or drag & drop</p>
+                    <div class="upload-img-preview">
+                    </div>
+                </label>
+                <input type="file" id="coverImage" name="coverImage" hidden>
+                <div class="update-img-overlay-action">
+                    <button type="submit">Update</button>
+                    <button type="button">Close</button>
+                </div>
+                <!-- File Upload Animation -->
+                <div class="upload-animation">
+                    <img src="../svg/uploadedFile.svg" alt="uploaded-file" srcset="">
+                    <div class="upload-progress">
+                        <div class="upload-progress-details">
+                            <p><span class="filename">img1.png</span> uploading...</p>
+                        </div>
+                        <div class="upload-progress-bar">
+                        </div>
+                    </div>
+                    <div class="upload-size">
+                        <img src="../svg/check.svg" alt="check-icon" srcset="">
+                        <span>100KB</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <li class="user-profile-item">
-            <span class="user-profile-bio"><textarea name="" id=""></textarea></span>
-            <a href="#">Add your bio</a>
-        </li>
-        <li class="user-profile-item">
-            <span class="user-profile-name">Username: <input type="text" name="username" id="username"
-                    value="Username"></span>
-            <a href="#">Edit your name</a>
-        </li>
-        <li class="user-profile-item">
-            <span class="user-profile-gender">Gender: <select name="gender" id="gender">
-                    <option value="male" selected>Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select></span>
-            <a href="#">Edit your gender</a>
-        </li>
-        <li class="user-profile-item">
-            <span class="user-profile-contact">Contact: <input type="number" name="contact" id="contact"
-                    value="9876543210"></span>
-            <a href="#">Edit your contact</a>
-        </li>
-        <li class="user-profile-item">
-            <span class="user-profile-email">Email: <input type="email" name="email" id="email"
-                    value="user@example.com"></span>
-            <a href="#">Edit your email</a>
-        </li>
-        <li class="user-profile-item">
-            <span class="user-profile-password">
-                New Password: <input type="password" name="new-password" id="new-password" value="********">
-            </span>
-            <span class="user-profile-password">
-                Old Password: <input type="password" name="old_password" id="old_password">
-            </span>
-            <a href="#">Change your password</a>
-        </li>
-    </>
-</div>
+        <!-- Update Username Overlay -->
+        <div class="update-username-overlay-backdrop">
+            <div class="update-username-overlay-container">
+                <h4>Update Your Username</h4>
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" name="firstname" value="<%= locals.firstname %>">
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" name="lastname" value="<%= locals.lastname %>">
+                <div class="update-username-overlay-action">
+                    <button type="submit">Update</button>
+                    <button type="button">Close</button>
+                </div>
+            </div>
+        </div>
+        <!-- Verify Email Overlay -->
+        <div class="verify-email-overlay-backdrop">
+            <div class="verify-email-overlay-container">
+                <h4>Verify Your Email</h4>
+                <p>Enter the verification code sent to your email</p>
+                <div data-verification-code>
+                    <input maxlength="1" type="text" id="1" name="1">
+                    <input maxlength="1" type="text" id="2" name="2">
+                    <input maxlength="1" type="text" id="3" name="3">
+                    <input maxlength="1" type="text" id="4" name="4">
+                    <input maxlength="1" type="text" id="5" name="5">
+                    <input maxlength="1" type="text" id="6" name="6">
+                </div>
+                <div class="verify-email-overlay-action">
+                    <button type="submit" disabled>Verify</button>
+                    <button type="button">Close</button>
+                </div>
+                <a href="#">Resend <span></span></a>
+            </div>
+        </div>

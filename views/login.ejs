@@ -17,30 +17,48 @@
                 <li>Manage Content</li>
             </ul>
         </div>
-        <div class="login-content">
-            <ul class="login-field-options">
-                <li class="login-items">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" placeholder=" " id="email">
-                </li>
-                <li class="login-items">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" placeholder=" " id="password">
-                </li>
-            </ul>
-        </div>
-        <div class="login-footer">
-            <button class="btn login-btn" id="login-btn">Log In</button>
-            <a class="forgot-password" href="user/forgot-password">Forgot Password?</a>
-            <a class="login-links" href="/user/signup">Don't have an account? Sign Up</a>
-        </div>
-        <div class="separator">or</div>
-        <div class="login-options-container">
-            <ul class="login-options">
-                <li><img src="/svg/googleIcon.svg" alt="google-icon"></li>
-                <li><img src="/svg/githubIcon.svg" alt="github-icon"></li>
-                <li><img src="/svg/facebookIcon.svg" alt="facebook-icon"></li>
-            </ul>
+        <div class="login-content-wrapper">
+            <div class="login-content">
+                <ul class="login-field-options">
+                    <li class="login-items">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" placeholder=" " id="email">
+                    </li>
+                    <li class="login-items">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" placeholder="" id="password">
+                        <img src="../svg/showPasswordIcon.svg" alt="show password icon" srcset="" data-show-password>
+                        <img src="../svg/hidePasswordIcon.svg" alt="hide password icon" srcset="" data-hide-password>
+                    </li>
+                </ul>
+            </div>
+            <div class="login-footer">
+                <button class="btn login-btn" id="login-btn">Log In</button>
+                <a class="forgot-password" href="user/forgot-password">Forgot Password?</a>
+                <a class="login-links" href="/user/signup">Don't have an account? Sign Up</a>
+            </div>
+            <div class="separator">or</div>
+            <div class="login-options-container">
+                <ul class="login-options">
+                    <li><img src="/svg/googleIcon.svg" alt="google-icon"></li>
+                    <li><img src="/svg/githubIcon.svg" alt="github-icon"></li>
+                    <li><img src="/svg/facebookIcon.svg" alt="facebook-icon"></li>
+                </ul>
+            </div>
         </div>
     </form>
+    <div class="forgot-password-overlay-backdrop">
+        <div class="glassomorphic
+        forgot-password-overlay-container">
+            <h4>Enter your Email Id</h4>
+            <div class="forgot-password-overlay-value">
+                <label for="forgot-password-email">Email</label>
+                <input type="email" id="forgot-password-email">
+            </div>
+            <div class="forgot-password-overlay-action">
+                <button type="submit">Submit</button>
+                <button type="button">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

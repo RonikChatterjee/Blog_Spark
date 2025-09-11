@@ -1,23 +1,67 @@
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+dotenv.config()
 
-const JWT_SECRET =
-  process.env.JWT_SECRET || 'Ronik62378932@#BlogSpark74378437'
+const JWT_SECRET = process.env.JWT_SECRET
 
 function generateToken(user) {
+  let coverImg = user.coverImg
+  console.log('Cover Img in generate token: ', coverImg)
+  if (
+    coverImg === undefined ||
+    coverImg === '' ||
+    coverImg === null
+  ) {
+    coverImg = '/images/user_cover_avatar.png'
+  }
+
+  let profileImg = user.profileImg
+  console.log('Profile Img in generate token: ', profileImg)
+  if (
+    profileImg === undefined ||
+    profileImg === '' ||
+    profileImg === null
+  ) {
+    profileImg = '/images/user_avatar.png'
+  }
+
+  let bio = user.bio
+  console.log('Bio in generate token: ', bio)
+  if (bio === undefined || bio === '' || bio === null) {
+    bio = 'Hey there! I am using BlogSpark.'
+  }
+
+  // Destructure user information for the JWT token
+  const {
+    _id,
+    email,
+    firstname,
+    lastname,
+    contact,
+    gender,
+    isVerified,
+  } = user
+
   // Create a JWT token with user information, expiration time, secret key & algorithm
   const encodedToken = jwt.sign(
     {
-      id: user._id,
-      email: user.email,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      contact: user.contact,
-      gender: user.gender
+      _id,
+      coverImg,
+      profileImg,
+      bio,
+      email,
+      firstname,
+      lastname,
+      contact,
+      gender,
+      isVerified,
     },
-    JWT_SECRET, {
-    algorithm: 'HS256',
-    expiresIn: '24h', // Token will expire in 24 hours
-  })
+    JWT_SECRET,
+    {
+      algorithm: 'HS256',
+      expiresIn: '24h', // Token will expire in 24 hours
+    }
+  )
   return encodedToken
 }
 

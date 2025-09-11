@@ -8,6 +8,11 @@
   --color-error-dark: #c0392b;
   --color-error-darker: #a93226;
 
+  /* Warning Colors */
+  --color-warning: #f7b731; /* Vibrant amber/yellow for main warning */
+  --color-warning-dark: #e2a400; /* Deeper gold for gradients/shadows */
+  --color-warning-darker: #b97d10; /* Rich brownish-gold for depth */
+
   /* Success Colors */
   --color-success: #27ae60;
   --color-success-dark: #229954;
@@ -33,6 +38,7 @@
   --color-bg-primary-superlight: #f8f9fa;
 
   /* Text Colors */
+  --color-light-accent: #f3d574;
   --color-accent: #d4af37;
   --color-bright-accent: #ffd700;
   --color-border-gold: rgba(212, 175, 55, 0.2);
@@ -102,8 +108,12 @@
   --font-weight-extrabold: 800;
 
   /* Z-index */
+  --z-error-container: 3000;
+  --z-warning-container: 3000;
+  --z-success-container: 3000;
   --z-header: 1000;
   --z-sidebar: 1100;
+  --z-dropdown-menu: 3000;
   --z-hamburger: 1200;
   --z-slider: 1300;
   --z-slider-navigation: 1400;

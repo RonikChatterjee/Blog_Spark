@@ -1,7 +1,8 @@
-import Users from './userModel.js'
-import Blogs from './blogModel.js'
-import Followers from './followerModel.js'
-import Likes from './likeModel.js'
-import Comments from './commentModel.js'
+import Users from './user.model.js'
+import Verification from './verification.model.js'
+import Blogs from './blog.model.js'
+import Followers from './follower.model.js'
+import Likes from './like.model.js'
+import Comments from './comment.model.js'
 
-export { Users, Blogs, Followers, Likes, Comments }
+export { Users, Verification, Blogs, Followers, Likes, Comments }

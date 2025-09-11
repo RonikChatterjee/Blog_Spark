@@ -13,10 +13,14 @@ function contractSidebar() {
 }
 
 function initialiseSidebar() {
-  const mediaQuery = window.matchMedia(
+  const mediaQueryTablet = window.matchMedia(
     '(min-width: 648px) and (max-width: 1023px)'
   )
-  if (mediaQuery.matches) {
+  const mediaQueryDesktop = window.matchMedia('(min-width: 1024px)')
+  if (mediaQueryTablet.matches) {
+    contractSidebar()
+  } else if (mediaQueryDesktop.matches) {
+    // expandSidebar()
     contractSidebar()
   }
 }

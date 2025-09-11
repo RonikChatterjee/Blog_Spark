@@ -2,6 +2,12 @@ import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema(
   {
+    profileImg: {
+      type: String,
+    },
+    coverImg: {
+      type: String,
+    },
     firstname: {
       type: String,
       required: true,
@@ -9,6 +15,9 @@ const userSchema = new mongoose.Schema(
     lastname: {
       type: String,
       required: true,
+    },
+    bio: {
+      type: String,
     },
     gender: {
       type: String,
@@ -27,6 +36,10 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

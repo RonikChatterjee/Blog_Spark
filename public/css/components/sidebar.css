@@ -92,6 +92,7 @@
     top: 95px;
     left: 10px;
     overflow: hidden;
+    z-index: var(--z-dropdown-menu);
     transform-origin: top;
     transition: all var(--transition-slow);
   }
@@ -118,7 +119,7 @@
     display: none;
   }
 
-  .sidebar {
+  /* .sidebar {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -127,5 +128,5 @@
     overflow: hidden;
     transform-origin: top;
     transition: all var(--transition-slow);
-  }
+  } */
 }
