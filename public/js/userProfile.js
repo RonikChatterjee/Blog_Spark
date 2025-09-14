@@ -361,22 +361,33 @@ async function handleUpdatedUserName() {
 /************** Update Without Overlay **************/
 
 // ✅ Constants
+// Bio
 const bioContent = document.querySelector(
   '.user-profile-bio-section textarea'
 )
 const editBioButton = document.querySelector(
   '.user-profile-bio-section button[type="submit"]'
 )
+// Gender
 const editGenderButton = document.getElementById('gender')
+// Contact
 const contactContent = document.getElementById('contact')
 const editContactButton = document.querySelector(
   '[data-update-contact] button'
 )
+// Update Password
 const currentPasswordContent = document.getElementById('currPassword')
 const newPasswordContent = document.getElementById('newPassword')
 const editPasswordButton = document.querySelector(
   '[data-update-password] button'
 )
+// Set Password
+const password = document.getElementById('password')
+const confirmPassword = document.getElementById('confirmPassword')
+const setPasswordButton = document.querySelector(
+  '[data-set-password] button'
+)
+// Toggle Password Visibility
 const showCurrentPasswordIcon = document.querySelector(
   '[data-show-current-password]'
 )
@@ -463,6 +474,32 @@ editContactButton.addEventListener('click', event => {
   console.log('Edit Contact Button Clicked')
   event.preventDefault()
   handleUpdatedContact()
+})
+
+// ✅ Enable/Disable Set Password Button based on input
+password.addEventListener('input', () => {
+  const passwordLength = password.value.trim().length
+  const confirmPasswordLength = confirmPassword.value.trim().length
+  if (passwordLength > 0 && confirmPasswordLength > 0) {
+    setPasswordButton.disabled = false
+  } else {
+    setPasswordButton.disabled = true
+  }
+})
+confirmPassword.addEventListener('input', () => {
+  const passwordLength = password.value.trim().length
+  const confirmPasswordLength = confirmPassword.value.trim().length
+  if (passwordLength > 0 && confirmPasswordLength > 0) {
+    setPasswordButton.disabled = false
+  } else {
+    setPasswordButton.disabled = true
+  }
+})
+
+// ✅ Set Password for the First Time
+setPasswordButton.addEventListener('click', event => {
+  event.preventDefault()
+  handleSetPassword()
 })
 
 // ✅ Enable/Disable Password Update Button based on input
@@ -610,7 +647,7 @@ function togglePasswordVisibility(
     inputField.type === 'password' ? 'text' : 'password'
 }
 
-//  ✅ Function to Update Password
+// ✅ Function to Update Password
 async function handleUpdatedPassword() {
   const currPasswordInput = document.getElementById('currPassword')
   const newPasswordInput = document.getElementById('newPassword')
@@ -645,6 +682,57 @@ async function handleUpdatedPassword() {
       newPasswordInput.value = ''
       editPasswordButton.disabled = true
       showSuccessPopup('Success', resValue.message)
+    } else {
+      showErrorPopup('Error', resValue.message)
+    }
+  } catch (error) {
+    showErrorPopup('Error', error.message)
+  }
+}
+
+// ✅ Function to Set Password
+async function handleSetPassword() {
+  const passwordInput = password.value.trim()
+  const confirmPasswordInput = confirmPassword.value.trim()
+
+  // Validate the Passwords
+  let error = validatePassword(passwordInput)
+  if (!error.isValid) {
+    showErrorPopup('Error', 'Password ' + error.message)
+    return
+  }
+  error = validatePassword(confirmPasswordInput)
+  if (!error.isValid) {
+    showErrorPopup('Error', 'Confirm ' + error.message)
+    return
+  }
+  if (passwordInput !== confirmPasswordInput) {
+    showErrorPopup('Error', 'Passwords do not match!')
+    return
+  }
+
+  // If all validations pass, set the password
+  try {
+    const resJson = await fetch('/user/profile/password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Credentials: 'include', // Include cookies for authentication
+      },
+      body: JSON.stringify({
+        currentPassword: passwordInput,
+        newPassword: confirmPasswordInput,
+      }),
+    })
+    const resValue = await resJson.json()
+
+    if (resJson.ok) {
+      password.value = ''
+      confirmPassword.value = ''
+      setPasswordButton.disabled = true
+      showSuccessPopup('Success', resValue.message, () => {
+        location.reload()
+      })
     } else {
       showErrorPopup('Error', resValue.message)
     }

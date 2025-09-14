@@ -45,6 +45,11 @@ app.use(cookieParser())
 app.use(express.static(path.resolve('./public')))
 app.use(express.json())
 
+// initialising passport middleware for authentication
+import passport from 'passport'
+import './config/passport.js'
+app.use(passport.initialize())
+
 // Handle favicon requests
 app.get('/favicon.ico', (req, res) => res.status(204).end())
 
@@ -53,11 +58,13 @@ import homeRouter from './routes/home.routes.js'
 import userRouter from './routes/user.routes.js'
 import testRouter from './routes/test.routes.js'
 import verifyRouter from './routes/verify.routes.js'
+import oauthRouter from './routes/oauth.routes.js'
 
 // Apply authOptional middleware only to specific routes that need it
 app.use('/', homeRouter)
 app.use('/user', userRouter)
 app.use('/verify', verifyRouter)
+app.use('/oauth', oauthRouter)
 app.use('/test', testRouter)
 
 httpServer.listen(PORT, () => {

@@ -2,12 +2,13 @@ import { Users, Verification } from '../models/index.js'
 import {
   uploadImageToCloudinary,
   deleteImageFromCloudinary,
-} from '../utilities/cloudinary.js'
+} from '../config/cloudinary.js'
 import { hashPassword, verifyPassword } from '../utilities/hash.js'
 import { generateToken } from '../utilities/jwtTokens.js'
 import { sendVerificationEmail } from '../utilities/nodemailer.js'
 import { generateOTP } from '../utilities/otpGenerator.js'
 import generateUniqueString from '../utilities/nanoid.js'
+import { COOKIE_OPTIONS } from '../constants.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -31,6 +32,7 @@ function handleGetUserProfile(req, res) {
     contact,
     email,
     isVerified,
+    hasPassword,
   } = req.user
 
   // return res.status(200).json({ ...req.user })
@@ -47,6 +49,7 @@ function handleGetUserProfile(req, res) {
       contact,
       email,
       emailVerified: isVerified,
+      hasPassword,
     },
   })
 }
@@ -84,7 +87,7 @@ async function handleUpdateCoverImage(req, res) {
     req.user.coverImg = secureUrl
 
     // Update the cookies with the new user data
-    res.cookie('jwtToken', generateToken(req.user))
+    res.cookie('jwtToken', generateToken(req.user), COOKIE_OPTIONS)
 
     // Delete the old image from Cloudinary if it exists after updating the new image secureUrl into the database
     if (oldImageUrl) {
@@ -135,7 +138,7 @@ async function handleUpdateAvatar(req, res) {
     req.user.profileImg = secureUrl
 
     // Update the cookies with the new user data
-    res.cookie('jwtToken', generateToken(req.user))
+    res.cookie('jwtToken', generateToken(req.user), COOKIE_OPTIONS)
 
     // Delete the old image from Cloudinary if it exists after updating the new image secureUrl into the database
     if (oldImageUrl) {
@@ -177,7 +180,7 @@ async function handleUpdateUserName(req, res) {
     req.user.lastname = lastname
 
     // Update the cookies with the new user data
-    res.cookie('jwtToken', generateToken(req.user))
+    res.cookie('jwtToken', generateToken(req.user), COOKIE_OPTIONS)
 
     return res
       .status(200)
@@ -209,7 +212,7 @@ async function handleUpdateBio(req, res) {
     // Modify the user object in req to reflect the new bio
     req.user.bio = bio
     // Update the cookies with the new user data
-    res.cookie('jwtToken', generateToken(req.user))
+    res.cookie('jwtToken', generateToken(req.user), COOKIE_OPTIONS)
 
     return res
       .status(200)
@@ -242,7 +245,7 @@ async function handleUpdateGender(req, res) {
     // Modify the user object in req to reflect the new gender
     req.user.gender = gender
     // Update the cookies with the new user data
-    res.cookie('jwtToken', generateToken(req.user))
+    res.cookie('jwtToken', generateToken(req.user), COOKIE_OPTIONS)
 
     return res
       .status(200)
@@ -275,7 +278,7 @@ async function handleUpdateContact(req, res) {
     // Modify the user object in req to reflect the new contact
     req.user.contact = contact
     // Update the cookies with the new user data
-    res.cookie('jwtToken', generateToken(req.user))
+    res.cookie('jwtToken', generateToken(req.user), COOKIE_OPTIONS)
 
     return res
       .status(200)
@@ -376,7 +379,7 @@ async function handleUpdateEmail(req, res) {
     req.user.email = email
     req.user.isVerified = false
     // Update the cookies with the new user data
-    res.cookie('jwtToken', generateToken(req.user))
+    res.cookie('jwtToken', generateToken(req.user), COOKIE_OPTIONS)
 
     return res
       .status(200)
@@ -433,6 +436,48 @@ async function handleUpdatePassword(req, res) {
   }
 }
 
+/**
+ * @constant handleSetPassword
+ * @description Controller used to set the password of the authenticated user.
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Returns a promise that resolves when the password is updated.
+ * @throws {Error} - Throws an error if there is an issue updating the password.
+ */
+async function handleSetPassword(req, res) {
+  const { currentPassword, newPassword } = req.body
+  if (currentPassword !== newPassword) {
+    return res
+      .status(400)
+      .json({ message: 'Use same password in both the fields.' })
+  }
+  try {
+    // Hash the new password
+    const newHashedPassword = await hashPassword(newPassword)
+
+    // Update the user's password in the database
+    await Users.findByIdAndUpdate(req.user._id, {
+      password: newHashedPassword,
+      hasPassword: true,
+    })
+
+    // Update the user object in req
+    req.user.hasPassword = true
+
+    // Update the User Cookies
+    res.cookie('jwtToken', generateToken(req.user), COOKIE_OPTIONS)
+
+    return res
+      .status(200)
+      .json({ message: 'Password set successfully!' })
+  } catch (error) {
+    console.error('Error setting password:', error)
+    return res
+      .status(500)
+      .json({ message: 'Error setting password.\nTry again later.' })
+  }
+}
+
 export {
   handleGetUserProfile,
   handleUpdateCoverImage,
@@ -444,4 +489,5 @@ export {
   handleUpdateEmail,
   handleVerifyEmail,
   handleUpdatePassword,
+  handleSetPassword,
 }

@@ -1,5 +1,6 @@
 import { Users, Verification } from '../models/index.js'
 import { hashPassword, verifyPassword } from '../utilities/hash.js'
+import { COOKIE_OPTIONS } from '../constants.js'
 import { generateToken } from '../utilities/jwtTokens.js'
 import { sendResetPasswordEmail } from '../utilities/nodemailer.js'
 import generateUniqueString from '../utilities/nanoid.js'
@@ -107,12 +108,7 @@ async function handlePostUserLogIn(req, res) {
       const encodedToken = generateToken(existingUser)
 
       // Store the jwtTokens in client cookies
-      res.cookie('jwtToken', encodedToken, {
-        httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-        secure: false, // Ensures the cookie is sent over HTTPS only
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Set cookie expiration to 1 day
-        // maxAge: 24 * 60 * 60 * 1000, // Set cookie expiration to 1 day
-      })
+      res.cookie('jwtToken', encodedToken, COOKIE_OPTIONS)
       // Return success response
       return res.status(200).json({ message: 'Login successful' })
     } else {

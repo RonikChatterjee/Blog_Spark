@@ -335,7 +335,8 @@
 
 .user-profile-field-action[data-update-contact] button,
 .user-profile-field-action[data-update-email] button,
-.user-profile-field-action[data-update-password] button {
+.user-profile-field-action[data-update-password] button,
+.user-profile-field-action[data-set-password] button {
   background: linear-gradient(
     90deg,
     var(--color-light-accent),

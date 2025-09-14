@@ -14,4 +14,13 @@ const FILE_SIZE_DISPLAY = {
   DOCUMENT: '10MB',
 }
 
-export { FILE_SIZE_LIMITS, FILE_SIZE_DISPLAY }
+// Cookie Options
+const COOKIE_OPTIONS = {
+  httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
+  secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent over HTTPS
+  sameSite: 'lax', // Helps protect against CSRF attacks
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Set cookie expiration to 1 day
+  // maxAge: 24 * 60 * 60 * 1000, // Set cookie expiration to 1 day
+}
+
+export { FILE_SIZE_LIMITS, FILE_SIZE_DISPLAY, COOKIE_OPTIONS }

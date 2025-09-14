@@ -99,28 +99,53 @@
                         </div>
                     </li>
                     <!-- Password -->
-                    <li class="user-profile-field">
-                        <div class="user-profile-field-value">
-                            <label for="currPassword">Current Password</label>
-                            <input type="password" name="currPassword" id="currPassword" value="">
-                            <img src="../svg/showPasswordIcon.svg" alt="show password icon" srcset=""
-                                data-show-current-password>
-                            <img src="../svg/hidePasswordIcon.svg" alt="hide password icon" srcset=""
-                                data-hide-current-password>
-                        </div>
-                        <div class="user-profile-field-value">
-                            <label for="newPassword">New Password</label>
-                            <input type="password" name="newPassword" id="newPassword" value="">
-                            <img src="../svg/showPasswordIcon.svg" alt="show password icon" srcset=""
-                                data-show-new-password>
-                            <img src="../svg/hidePasswordIcon.svg" alt="hide password icon" srcset=""
-                                data-hide-new-password>
-                        </div>
-                        <div class="user-profile-field-action" data-update-password>
-                            <span class="hide-component">Invalid password</span>
-                            <button type="button" disabled>Change Password</button>
-                        </div>
-                    </li>
+                    <% if (locals.hasPassword) { %>
+                        <li class="user-profile-field">
+                            <div class="user-profile-field-value">
+                                <label for="currPassword">Current Password</label>
+                                <input type="password" name="currPassword" id="currPassword" value="">
+                                <img src="../svg/showPasswordIcon.svg" alt="show password icon" srcset=""
+                                    data-show-current-password>
+                                <img src="../svg/hidePasswordIcon.svg" alt="hide password icon" srcset=""
+                                    data-hide-current-password>
+                            </div>
+                            <div class="user-profile-field-value">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" name="newPassword" id="newPassword" value="">
+                                <img src="../svg/showPasswordIcon.svg" alt="show password icon" srcset=""
+                                    data-show-new-password>
+                                <img src="../svg/hidePasswordIcon.svg" alt="hide password icon" srcset=""
+                                    data-hide-new-password>
+                            </div>
+                            <div class="user-profile-field-action" data-update-password>
+                                <span class="hide-component">Invalid password</span>
+                                <button type="button" disabled>Change Password</button>
+                            </div>
+                        </li>
+                        <% } else { %>
+                            <li class="user-profile-field">
+                                <div class="user-profile-field-value">
+                                    <label for="password">New Password</label>
+                                    <input type="password" name="password" id="password" value="">
+                                    <img src="../svg/showPasswordIcon.svg" alt="show password icon" srcset=""
+                                        data-show-current-password>
+                                    <img src="../svg/hidePasswordIcon.svg" alt="hide password icon" srcset=""
+                                        data-hide-current-password>
+                                </div>
+                                <div class="user-profile-field-value">
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <input type="password" name="confirmPassword" id="confirmPassword" value="">
+                                    <img src="../svg/showPasswordIcon.svg" alt="show password icon" srcset=""
+                                        data-show-new-password>
+                                    <img src="../svg/hidePasswordIcon.svg" alt="hide password icon" srcset=""
+                                        data-hide-new-password>
+                                </div>
+                                <div class="user-profile-field-action" data-set-password>
+                                    <span class="hide-component">Invalid password</span>
+                                    <button type="button" disabled>Set Password</button>
+                                </div>
+                            </li>
+                            <% } %>
                 </ul>
                 <button class="user-profile-field-button">
                     Delete Account

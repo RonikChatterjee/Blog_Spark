@@ -21,11 +21,9 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      required: true,
     },
     contact: {
       type: Number,
-      required: true,
       unique: true,
     },
     email: {
@@ -35,11 +33,33 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     isVerified: {
       type: Boolean,
       default: false,
+    },
+    googleId: {
+      type: String,
+      unique: true,
+    },
+    githubId: {
+      type: String,
+      unique: true,
+    },
+    facebookId: {
+      type: String,
+      unique: true,
+    },
+    oauthProvider: {
+      type: [String],
+      enum: ['local', 'google', 'github', 'facebook'],
+      default: ['local'],
+    },
+    hasPassword: {
+      type: Boolean,
+      default: function () {
+        return this.oauthProvider.includes('local')
+      },
     },
   },
   { timestamps: true }

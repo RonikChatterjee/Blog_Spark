@@ -31,15 +31,57 @@ function generateToken(user) {
     bio = 'Hey there! I am using BlogSpark.'
   }
 
+  let gender = user.gender
+  console.log('Gender in generate token: ', gender)
+  if (gender === undefined || gender === '' || gender === null) {
+    gender = ''
+  }
+
+  let contact = user.contact
+  console.log('Contact in generate token: ', contact)
+  if (contact === undefined || contact === '' || contact === null) {
+    contact = ''
+  }
+
+  let googleId = user.googleId
+  console.log('Google ID in generate token: ', googleId)
+  if (
+    googleId === undefined ||
+    googleId === '' ||
+    googleId === null
+  ) {
+    googleId = ''
+  }
+
+  let githubId = user.githubId
+  console.log('GitHub ID in generate token: ', githubId)
+  if (
+    githubId === undefined ||
+    githubId === '' ||
+    githubId === null
+  ) {
+    githubId = ''
+  }
+
+  let facebookId = user.facebookId
+  console.log('Facebook ID in generate token: ', facebookId)
+  if (
+    facebookId === undefined ||
+    facebookId === '' ||
+    facebookId === null
+  ) {
+    facebookId = ''
+  }
+
   // Destructure user information for the JWT token
   const {
     _id,
     email,
     firstname,
     lastname,
-    contact,
-    gender,
     isVerified,
+    hasPassword,
+    oauthProvider,
   } = user
 
   // Create a JWT token with user information, expiration time, secret key & algorithm
@@ -55,6 +97,11 @@ function generateToken(user) {
       contact,
       gender,
       isVerified,
+      hasPassword,
+      oauthProvider,
+      googleId,
+      githubId,
+      facebookId,
     },
     JWT_SECRET,
     {

@@ -43,6 +43,7 @@ import {
   handleUpdateContact,
   handleUpdateEmail,
   handleVerifyEmail,
+  handleSetPassword,
   handleUpdatePassword,
 } from '../controllers/userProfile.controller.js'
 
@@ -265,10 +266,21 @@ router
   .post(requireAuth, handleVerifyEmail)
 
 router
-  .route('/profile/password')
+  .route('/profile/update-password')
 
   /**
-   * @route PATCH /users/profile/password
+   * @route POST /users/profile/password
+   * @access Private (authenticated users only)
+   * @middleware requireAuth, validateUserPassword
+   * @description Set the first password for the user
+   * @body {string} newPassword - New password (required, min: 8 characters)
+   * @returns {Object} Success or error message
+   * @controller handleSetPassword
+   */
+  .post(requireAuth, validateUserPassword, handleSetPassword)
+
+  /**
+   * @route PATCH /users/profile/update-password
    * @access Private (authenticated users only)
    * @middleware requireAuth, validateUserPassword
    * @description Update the user's password

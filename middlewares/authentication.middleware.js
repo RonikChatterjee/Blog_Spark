@@ -96,6 +96,12 @@ function authOptional(req, res, next) {
  * @returns {void}
  */
 function checkEmailVerificationStatus(req, res, next) {
+  // debugging
+  console.log(
+    'checkEmailVerificationStatus middleware called',
+    req.method,
+    req.url
+  )
   if (req.user && !req.user.isVerified) {
     return res.redirect('/user/profile')
   }

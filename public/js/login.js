@@ -41,6 +41,21 @@ forgotPasswordLink.addEventListener('click', event => {
   resetPassword()
 })
 
+// Handle Login with Google
+document
+  .querySelector('#google-login')
+  .addEventListener('click', loginWithGoogle)
+
+// Handle Login with GitHub
+document
+  .querySelector('#github-login')
+  .addEventListener('click', loginWithGitHub)
+
+// Handle Login with Facebook
+// document
+//   .querySelector('#facebook-login')
+//   .addEventListener('click', loginWithFacebook)
+
 /****************** Functions ******************/
 
 // ✅ Function to Reset Password (Forgot Password)
@@ -183,4 +198,19 @@ function postLoginFormData() {
         )
       }
     })
+}
+
+// ✅ Function to Login with Google
+function loginWithGoogle() {
+  window.location.href = '/oauth/google'
+}
+
+// ✅ Function to Login with GitHub
+function loginWithGitHub() {
+  window.location.href = '/oauth/github'
+}
+
+// ✅ Function to Login with Facebook
+function loginWithFacebook() {
+  window.location.href = '/oauth/facebook'
 }

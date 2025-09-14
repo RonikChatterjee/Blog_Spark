@@ -2,6 +2,18 @@ import { validateFormData } from './validate.js'
 
 postSignUpFormData()
 
+// Handle Login with Google
+document
+  .querySelector('#google-login')
+  .addEventListener('click', loginWithGoogle)
+
+// Handle Login with GitHub
+document
+  .querySelector('#github-login')
+  .addEventListener('click', loginWithGitHub)
+
+/******************** Functions ********************/
+// ✅ Function to handle POST SignUp Form Data
 function postSignUpFormData() {
   console.log('postSignUpFormData called')
 
@@ -66,4 +78,14 @@ function postSignUpFormData() {
         )
       }
     })
+}
+
+// ✅ Function to Login with Google
+function loginWithGoogle() {
+  window.location.href = '/oauth/google'
+}
+
+// ✅ Function to Login with GitHub
+function loginWithGitHub() {
+  window.location.href = '/oauth/github'
 }

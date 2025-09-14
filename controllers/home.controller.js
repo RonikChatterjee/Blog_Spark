@@ -1,4 +1,5 @@
 function handleGetHomePage(req, res) {
+  // debugging
   if (req.isLoggedIn) {
     return res.render('home', {
       layout: 'layouts/base_format_loggedin',
